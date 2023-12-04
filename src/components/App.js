@@ -1,5 +1,10 @@
-function App() {
-  return <div>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</div>;
-}
+import { BookList } from './BookList/BookList';
 
-export default App;
+export function App() {
+  return (
+    <div>
+      <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
+      <BookList />
+    </div>
+  );
+}
