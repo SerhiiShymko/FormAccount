@@ -15,7 +15,7 @@
     "nameOut": "Petrov2",
     "nameIn": "Cergo2",
     "aktNumber": 2,
-    "note": "del"
+    "note": "on"
   },
     {
     "id": "3",
@@ -24,7 +24,7 @@
     "nameOut": "Petrov1",
     "nameIn": "Ivanica3",
     "aktNumber": 3,
-    "note": "del"
+    "note": "off"
   },
     {
     "id": "4",
