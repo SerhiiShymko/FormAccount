@@ -1,10 +1,11 @@
 import { BookList } from './BookList/BookList';
+import orderItems from '../data.json';
 
 export function App() {
   return (
-    <div>
+    <>
       <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
-      <BookList />
-    </div>
+      <BookList items={orderItems} />
+    </>
   );
 }
