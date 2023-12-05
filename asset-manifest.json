@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/form-account/static/css/main.7cda0caf.css",
+    "main.js": "/form-account/static/js/main.debfe4a1.js",
+    "index.html": "/form-account/index.html",
+    "main.7cda0caf.css.map": "/form-account/static/css/main.7cda0caf.css.map",
+    "main.debfe4a1.js.map": "/form-account/static/js/main.debfe4a1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7cda0caf.css",
+    "static/js/main.debfe4a1.js"
+  ]
+}
