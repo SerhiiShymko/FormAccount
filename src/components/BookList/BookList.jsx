@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import orderItems from '../../data.json';
-import { Input, List } from './BookList.styled';
+import { SearchBar } from 'components/SearchBar/SearchBar';
+
 
 export const BookList = () => {
     // Стани для кожного поля пошуку
@@ -25,44 +26,14 @@ export const BookList = () => {
 
     return (
         <div>
-            <List>
-                <Input
-                    type="text"
-                    placeholder="Дата отримання"
-                    value={searchData}
-                    onChange={(e) => setSearchData(e.target.value)}
-                />
-                <Input
-                    type="text"
-                    placeholder="Серійний номер"
-                    value={searchRegNumber}
-                    onChange={(e) => setSearchRegNumber(e.target.value)}
-                />
-                <Input
-                    type="text"
-                    placeholder="ПІБ передав"
-                    value={searchNameOut}
-                    onChange={(e) => setSearchNameOut(e.target.value)}
-                />
-                <Input
-                    type="text"
-                    placeholder="ПІБ отримав"
-                    value={searchNameIn}
-                    onChange={(e) => setSearchNameIn(e.target.value)}
-                />
-                <Input
-                    type="text"
-                    placeholder="Акт передачі"
-                    value={searchAktNumber}
-                    onChange={(e) => setSearchAktNumber(e.target.value)}
-                />
-                <Input
-                    type="text"
-                    placeholder="Примітка"
-                    value={searchNote}
-                    onChange={(e) => setSearchNote(e.target.value)}
-                />
-            </List>
+            <SearchBar
+                setSearchData={setSearchData}
+                setSearchRegNumber={setSearchRegNumber}
+                setSearchNameOut={setSearchNameOut}
+                setSearchNameIn={setSearchNameIn}
+                setSearchAktNumber={setSearchAktNumber}
+                setSearchNote={setSearchNote}
+            />
             <table>
                 <thead>
                     <tr>
@@ -91,3 +62,4 @@ export const BookList = () => {
         </div>
     );
 }
+
