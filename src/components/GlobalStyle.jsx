@@ -32,7 +32,6 @@ th,
 td {
  border: solid 1px;
  width: 130px;
- display: flexbox;
 text-align:center
 }
 `;

@@ -66,8 +66,8 @@ export const BookList = () => {
             <table>
                 <thead>
                     <tr>
-                        {/* <th>ID</th> */}
-                        {/* <th>data</th>
+                        {/* <th>ID</th>
+                         <th>data</th>
                         <th>regNumber</th>
                         <th>nameOut</th>
                         <th>nameIn</th>
