@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BookList } from './BookList/BookList';
 import { fetchOrder } from 'api';
+import { BookForm } from './BookForm/BookForm';
 
 export function App() {
   const [orderItems, setOrderItems] = useState([]);
@@ -27,6 +28,7 @@ export function App() {
     <>
       <>
         <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
+        <BookForm />
         {loading ? <div>LOADING...</div> : <BookList />}
       </>
     </>

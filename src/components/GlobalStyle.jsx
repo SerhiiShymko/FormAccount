@@ -29,9 +29,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 th,
-td {
+td,
+input {
  border: solid 1px;
  width: 130px;
 text-align:center
 }
 `;
+
