@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { StyledField, StyledForm } from './BookForm.styled';
 import { useState } from 'react';
+import { IconButton } from 'components/IconButton/IconButton';
 
 
 
@@ -42,7 +43,7 @@ export const BookForm = ({ onAdd }) => {
                 <label >
                     <StyledField name="note" placeholder="Примітка" />
                 </label>
-                <button type="submit">Add</button>
+                <IconButton type="submit">Add</IconButton>
             </StyledForm>
         </Formik>
     )
