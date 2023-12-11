@@ -1,82 +1,98 @@
-import { useEffect, useState } from 'react';
+import { Component } from 'react';
 import { BookList } from './BookList/BookList';
-// import orderItems from '../data.json';
-import { fetchOrder } from 'api';
+import initialQuizItems from '../data.json';
+// import { fetchOrder } from 'api';
 import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 
-const localStorageKey = 'order-filters';
-const initialFilters = {
-  data: '',
-  regNumber: '',
-  nameOut: '',
-  nameIn: '',
-  aktNumber: '',
-  note: '',
-};
+// const localStorageKey = 'order-filters';
+// const initialFilters = {
+//   data: '',
+//   regNumber: '',
+//   nameOut: '',
+//   nameIn: '',
+//   aktNumber: '',
+//   note: '',
+// };
 
-const getInitialFilters = () => {
-  const savedFilters = localStorage.getItem(localStorageKey);
-  if (savedFilters !== null) {
-    return JSON.parse(savedFilters);
-  }
-  return initialFilters;
-};
+// const getInitialFilters = () => {
+//   const savedFilters = localStorage.getItem(localStorageKey);
+//   if (savedFilters !== null) {
+//     return JSON.parse(savedFilters);
+//   }
+//   return initialFilters;
+// };
 
-export function App() {
-  const [orderItems, setOrderItems] = useState([]);
-  const [filters, setFilters] = useState(getInitialFilters);
-  const [loading, setLoading] = useState(false);
+export class App extends Component {
+  state = {
+    orderItems: initialQuizItems,
+  };
+  // const [orderItems, setOrderItems] = useState([]);
+  // const [filters, setFilters] = useState(getInitialFilters);
+  // const [loading, setLoading] = useState(false);
 
-  const deleteOrder = async orderId => {
-    try {
-      const deletedOrder = await deleteOrder(orderId);
-      setOrderItems(prevState =>
-        prevState.quizItems.filter(quiz => quiz.id !== deletedOrder.id)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  // const deleteOrder = async orderId => {
+  //   console.log(orderId);
+  //   try {
+  //     const deletedOrder = await deleteOrder(orderId);
+  //     setOrderItems(prevState =>
+  //       prevState.orderItems.filter(order => order.id !== deletedOrder.id)
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  handleDelete = orderId => {
+    this.setState(prevState => {
+      return {
+        orderItems: prevState.orderItems.filter(order => order.id !== orderId),
+      };
+    });
   };
 
   //Фетч данних х бекенду
-  useEffect(() => {
-    async function getOrder() {
-      try {
-        setLoading(true);
-        const orderItems = await fetchOrder();
-        setOrderItems(orderItems);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getOrder();
-  }, []);
+  // useEffect(() => {
+  //   async function getOrder() {
+  //     try {
+  //       setLoading(true);
+  //       const orderItems = await fetchOrder();
+  //       setOrderItems(orderItems);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   getOrder();
+  // }, []);
 
   //Запис фільтрів в localStorage
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(filters));
-  }, [filters]);
+  // useEffect(() => {
+  //   localStorage.setItem(localStorageKey, JSON.stringify(filters));
+  // }, [filters]);
 
-  const resetFilters = () => {
-    setFilters(initialFilters);
-  };
-
-  return (
-    <>
+  // const resetFilters = () => {
+  //   setFilters(initialFilters);
+  // };
+  render() {
+    return (
       <>
-        <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
-        <BookForm />
-        <SearchBar onReset={resetFilters} />
-        {loading ? (
-          <div>LOADING...</div>
-        ) : (
-          <BookList items={orderItems} onDelete={deleteOrder} />
-        )}
+        <>
+          <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
+          <BookForm />
+          <SearchBar />
+          {/* {loading ? (
+            <div>LOADING...</div>
+          ) : ( */}
+          <BookList
+            items={this.state.orderItems}
+            onDelete={this.handleDelete}
+          />
+          {/* )} */}
+        </>
       </>
-    </>
-  );
+    );
+  }
 }

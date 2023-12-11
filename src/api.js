@@ -13,6 +13,6 @@ export const deleteOrder = async orderId => {
 };
 
 export const createOrder = async order => {
-  const response = await axios.post('/orderez/', order);
+  const response = await axios.post('/order', order);
   return response.data;
 };
