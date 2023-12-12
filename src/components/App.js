@@ -81,8 +81,8 @@ export class App extends Component {
       <>
         <>
           <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
-          <BookForm />
           <SearchBar />
+          <BookForm />
           {/* {loading ? (
             <div>LOADING...</div>
           ) : ( */}
