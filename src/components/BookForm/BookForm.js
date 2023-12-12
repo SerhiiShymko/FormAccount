@@ -8,27 +8,29 @@ import { useEffect, useState } from 'react';
 // import { IconButton } from 'components/IconButton/IconButton';
 
 const schema = Yup.object().shape({
-  // data: Yup.data().required('Required'),
-  regNumber: Yup.string().min(2, 'Too Short!').required('Required'),
-  nameOut: Yup.string().oneOf(['Petrov1', 'Petrov2']).required('Required'),
-  nameIn: Yup.string().min(2, 'Too Short!').required('Required'),
-  aktNumber: Yup.number()
-    .positive('Must be >0')
-    .min(1, 'Not enough time!')
-    .required('Required'),
-  note: Yup.string().min(2, 'Too Short!').required('Required'),
+  // data: Yup.string().required("Обов'язкове поле"),
+  regNumber: Yup.string()
+    .min(5, 'Занадто короткий рядок!')
+    .required("Обов'язкове поле"),
+  nameOut: Yup.string()
+    .oneOf(['Petrov1', 'Petrov2'])
+    .required("Обов'язкове поле"),
+  nameIn: Yup.string()
+    .min(2, 'Занадто короткий рядок!')
+    .required("Обов'язкове поле"),
+  aktNumber: Yup.number().positive('Має бути >0').required("Обов'язкове поле"),
+  note: Yup.string()
+    .min(2, 'Занадто короткий рядок!')
+    .required("Обов'язкове поле"),
 });
 
 export const BookForm = ({ onAdd }) => {
   const [data, setData] = useState(new Date());
-  useEffect(() => {
-    setData(new Date());
-  }, []);
 
   return (
     <Formik
       initialValues={{
-        data: '',
+        data: new Date(),
         regNumber: '',
         nameOut: 'Petrov1',
         nameIn: '',
