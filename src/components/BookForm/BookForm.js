@@ -4,79 +4,82 @@ import { nanoid } from 'nanoid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { StyledError, StyledField, StyledForm } from './BookForm.styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import { IconButton } from 'components/IconButton/IconButton';
 
 const schema = Yup.object().shape({
-  // selectedDate: Yup.data().required('Required'),
-  serialNumberForm: Yup.string().min(2, 'Too Short!').required('Required'),
-  lastNameOutForm: Yup.string()
-    .oneOf(['Petrov1', 'Petrov2'])
-    .required('Required'),
-  lastNameInForm: Yup.string().min(2, 'Too Short!').required('Required'),
-  aktNumberForm: Yup.number()
+  // data: Yup.data().required('Required'),
+  regNumber: Yup.string().min(2, 'Too Short!').required('Required'),
+  nameOut: Yup.string().oneOf(['Petrov1', 'Petrov2']).required('Required'),
+  nameIn: Yup.string().min(2, 'Too Short!').required('Required'),
+  aktNumber: Yup.number()
     .positive('Must be >0')
     .min(1, 'Not enough time!')
     .required('Required'),
-  noteForm: Yup.string().min(2, 'Too Short!').required('Required'),
+  note: Yup.string().min(2, 'Too Short!').required('Required'),
 });
 
 export const BookForm = ({ onAdd }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [data, setData] = useState(new Date());
+  useEffect(() => {
+    setData(new Date());
+  }, []);
 
   return (
     <Formik
       initialValues={{
-        selectedDate: null,
-        serialNumberForm: '',
-        lastNameOutForm: 'Petrov1',
-        lastNameInForm: '',
-        aktNumberForm: '',
-        noteForm: '',
+        data: '',
+        regNumber: '',
+        nameOut: 'Petrov1',
+        nameIn: '',
+        aktNumber: '',
+        note: '',
       }}
       validationSchema={schema}
-      onSubmit={values => {
+      onSubmit={(values, actions) => {
         console.log(values);
+        onAdd({ ...values, id: nanoid() });
+        // actions.resetForm();
       }}
     >
       <StyledForm>
         <label>
           <DatePicker
             // placeholderText="Дата"
-            selected={selectedDate}
-            onChange={dateForm => setSelectedDate(dateForm)}
+            selected={data}
+            onChange={dateForm => setData(dateForm)}
           />
         </label>
         <label>
-          <StyledField name="serialNumberForm" placeholder="Серійний номер" />
-          <StyledError name="serialNumberForm" component="div" />
+          <StyledField name="regNumber" placeholder="Серійний номер" />
+          <StyledError name="regNumber" component="div" />
         </label>
         <label>
           <StyledField
-            name="lastNameOutForm"
+            name="nameOut"
             as="select"
-            placeholder="ПІБ передав"
+            // placeholder="ПІБ передав"
           >
             <option value="beginner">Petrov1</option>
             <option value="intermediate">Petrov2</option>
           </StyledField>
-          <StyledError name="lastNameOutForm" component="div" />
+          <StyledError name="nameOut" component="div" />
         </label>
         <label>
-          <StyledField name="lastNameInForm" placeholder="ПІБ отримав" />
-          <StyledError name="lastNameInForm" component="div" />
+          <StyledField name="nameIn" placeholder="ПІБ отримав" />
+          <StyledError name="nameIn" component="div" />
         </label>
         <label>
           <StyledField
-            name="aktNumberForm"
+            name="aktNumber"
             placeholder="Акт передачі"
             type="number"
           />
-          <StyledError name="aktNumberForm" component="div" />
+          <StyledError name="aktNumber" component="div" />
         </label>
         <label>
-          <StyledField name="noteForm" placeholder="Примітка" />
-          <StyledError name="noteForm" component="div" />
+          <StyledField name="note" placeholder="Примітка" />
+          <StyledError name="note" component="div" />
         </label>
         <button type="submit">Add</button>
       </StyledForm>

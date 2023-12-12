@@ -51,6 +51,14 @@ export class App extends Component {
     });
   };
 
+  addOrder = newOrder => {
+    this.setState(prevState => {
+      return {
+        orderItems: [...prevState.orderItems, newOrder],
+      };
+    });
+  };
+
   //Фетч данних х бекенду
   // useEffect(() => {
   //   async function getOrder() {
@@ -81,8 +89,8 @@ export class App extends Component {
       <>
         <>
           <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
-          <SearchBar />
-          <BookForm />
+          {/* <SearchBar /> */}
+          <BookForm onAdd={this.addOrder} />
           {/* {loading ? (
             <div>LOADING...</div>
           ) : ( */}
