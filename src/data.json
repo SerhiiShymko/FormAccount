@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "data": "01.12.2023",
+    "selectData": "01.12.2023",
     "regNumber": "G205231",
     "nameOut": "Petrov1",
     "nameIn": "Ivanov1",
@@ -10,7 +10,7 @@
   },
     {
     "id": "2",
-    "data": "02.12.2023",
+    "selectData": "02.12.2023",
     "regNumber": "G205232",
     "nameOut": "Petrov2",
     "nameIn": "Cergo2",
@@ -19,7 +19,7 @@
   },
     {
     "id": "3",
-    "data": "03.12.2023",
+    "selectData": "03.12.2023",
     "regNumber": "G205233",
     "nameOut": "Petrov1",
     "nameIn": "Ivanica3",
@@ -28,7 +28,7 @@
   },
     {
     "id": "4",
-    "data": "04.12.2023",
+    "selectData": "04.12.2023",
     "regNumber": "G205234",
     "nameOut": "Petrov1",
     "nameIn": "Cefon4",
@@ -37,7 +37,7 @@
   },
     {
     "id": "5",
-    "data": "05.12.2023",
+    "selectData": "05.12.2023",
     "regNumber": "G205235",
     "nameOut": "Petrov1",
     "nameIn": "Medved5",
@@ -46,7 +46,7 @@
   },
     {
     "id": "6",
-    "data": "06.12.2023",
+    "selectData": "06.12.2023",
     "regNumber": "G205236",
     "nameOut": "Petrov2",
     "nameIn": "Varenica6",

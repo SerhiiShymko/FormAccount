@@ -4,11 +4,11 @@ import { nanoid } from 'nanoid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { StyledError, StyledField, StyledForm } from './BookForm.styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { IconButton } from 'components/IconButton/IconButton';
 
 const schema = Yup.object().shape({
-  // selectData: Yup.string().required("Обов'язкове поле"),
+  selectData: Yup.date().required("Обов'язкове поле"),
   regNumber: Yup.string()
     .min(5, 'Занадто короткий рядок!')
     .required("Обов'язкове поле"),
@@ -25,7 +25,16 @@ const schema = Yup.object().shape({
 });
 
 export const BookForm = ({ onAdd }) => {
-  const [selectData, setSelectData] = useState(new Date());
+  const [selectedData, setSelectedData] = useState(new Date());
+
+  const formatDate = date => {
+    const formattedDate = new Date(date);
+    const day = formattedDate.getDate().toString().padStart(2, '0');
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = formattedDate.getFullYear();
+
+    return `${day}.${month}.${year}`;
+  };
 
   return (
     <Formik
@@ -39,52 +48,62 @@ export const BookForm = ({ onAdd }) => {
       }}
       validationSchema={schema}
       onSubmit={(values, actions) => {
-        console.log(values);
-        onAdd({ ...values, id: nanoid() });
+        // console.log('Form values:', values);
+        // console.log('Selected Date in onSubmit:', values.selectData);
+        const formattedDate = formatDate(values.selectData);
+        // console.log('Formatted date:', formattedDate);
+        onAdd({ ...values, selectData: formattedDate, id: nanoid() });
         // actions.resetForm();
       }}
     >
-      <StyledForm>
-        <label>
-          <DatePicker
-            // placeholderText="Дата"
-            selected={selectData}
-            onChange={dateForm => setSelectData(dateForm)}
-          />
-        </label>
-        <label>
-          <StyledField name="regNumber" placeholder="Серійний номер" />
-          <StyledError name="regNumber" component="div" />
-        </label>
-        <label>
-          <StyledField
-            name="nameOut"
-            as="select"
-            // placeholder="ПІБ передав"
-          >
-            <option value="beginner">Petrov1</option>
-            <option value="intermediate">Petrov2</option>
-          </StyledField>
-          <StyledError name="nameOut" component="div" />
-        </label>
-        <label>
-          <StyledField name="nameIn" placeholder="ПІБ отримав" />
-          <StyledError name="nameIn" component="div" />
-        </label>
-        <label>
-          <StyledField
-            name="aktNumber"
-            placeholder="Акт передачі"
-            type="number"
-          />
-          <StyledError name="aktNumber" component="div" />
-        </label>
-        <label>
-          <StyledField name="note" placeholder="Примітка" />
-          <StyledError name="note" component="div" />
-        </label>
-        <button type="submit">Add</button>
-      </StyledForm>
+      {({ values, setFieldValue }) => (
+        <StyledForm>
+          <label>
+            <DatePicker
+              // placeholderText="Дата"
+              selected={selectedData}
+              onChange={date => {
+                setFieldValue('selectData', date);
+                setSelectedData(date);
+                // console.log('Selected Date:', date);
+              }}
+              dateFormat="dd.MM.yyyy"
+            />
+          </label>
+          <label>
+            <StyledField name="regNumber" placeholder="Серійний номер" />
+            <StyledError name="regNumber" component="div" />
+          </label>
+          <label>
+            <StyledField
+              name="nameOut"
+              as="select"
+              // placeholder="ПІБ передав"
+            >
+              <option value="beginner">Petrov1</option>
+              <option value="intermediate">Petrov2</option>
+            </StyledField>
+            <StyledError name="nameOut" component="div" />
+          </label>
+          <label>
+            <StyledField name="nameIn" placeholder="ПІБ отримав" />
+            <StyledError name="nameIn" component="div" />
+          </label>
+          <label>
+            <StyledField
+              name="aktNumber"
+              placeholder="Акт передачі"
+              type="number"
+            />
+            <StyledError name="aktNumber" component="div" />
+          </label>
+          <label>
+            <StyledField name="note" placeholder="Примітка" />
+            <StyledError name="note" component="div" />
+          </label>
+          <button type="submit">Add</button>
+        </StyledForm>
+      )}
     </Formik>
   );
 };
