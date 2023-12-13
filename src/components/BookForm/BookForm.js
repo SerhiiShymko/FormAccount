@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 // import { IconButton } from 'components/IconButton/IconButton';
 
 const schema = Yup.object().shape({
-  // data: Yup.string().required("Обов'язкове поле"),
+  // selectData: Yup.string().required("Обов'язкове поле"),
   regNumber: Yup.string()
     .min(5, 'Занадто короткий рядок!')
     .required("Обов'язкове поле"),
@@ -25,12 +25,12 @@ const schema = Yup.object().shape({
 });
 
 export const BookForm = ({ onAdd }) => {
-  const [data, setData] = useState(new Date());
+  const [selectData, setSelectData] = useState(new Date());
 
   return (
     <Formik
       initialValues={{
-        data: new Date(),
+        selectData: new Date(),
         regNumber: '',
         nameOut: 'Petrov1',
         nameIn: '',
@@ -48,8 +48,8 @@ export const BookForm = ({ onAdd }) => {
         <label>
           <DatePicker
             // placeholderText="Дата"
-            selected={data}
-            onChange={dateForm => setData(dateForm)}
+            selected={selectData}
+            onChange={dateForm => setSelectData(dateForm)}
           />
         </label>
         <label>
