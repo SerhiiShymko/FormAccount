@@ -59,10 +59,9 @@ export class App extends Component {
     });
   };
 
-  render() {
-    const { filters, orderItems } = this.state;
-
-    const visibleOrderItems = orderItems.filter(order => {
+  getVisibleOrderItems = () => {
+    const { orderItems, filters } = this.state;
+    return orderItems.filter(order => {
       const selectDataMatch =
         !filters.selectData ||
         new Date(order.selectData).toDateString() ===
@@ -93,6 +92,11 @@ export class App extends Component {
         noteMatch
       );
     });
+  };
+
+  render() {
+    const { filters } = this.state;
+    const visibleOrderItems = this.getVisibleOrderItems();
 
     return (
       <>
