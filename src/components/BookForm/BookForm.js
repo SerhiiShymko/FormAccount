@@ -41,13 +41,14 @@ export const BookForm = ({ onAdd }) => {
       initialValues={{
         selectData: new Date(),
         regNumber: '',
-        nameOut: 'Petrov1',
+        nameOut: '',
         nameIn: '',
         aktNumber: '',
         note: '',
       }}
       validationSchema={schema}
       onSubmit={(values, actions) => {
+        console.log(values);
         const formattedDate = formatDate(values.selectData);
         onAdd({ ...values, selectData: formattedDate, id: nanoid() });
         actions.resetForm();
@@ -71,13 +72,9 @@ export const BookForm = ({ onAdd }) => {
             <StyledError name="regNumber" component="div" />
           </label>
           <label>
-            <StyledField
-              name="nameOut"
-              as="select"
-              // placeholder="ПІБ передав"
-            >
-              <option value="beginner">Petrov1</option>
-              <option value="intermediate">Petrov2</option>
+            <StyledField name="nameOut" as="select">
+              <option value="Petrov1">Petrov1</option>
+              <option value="Petrov2">Petrov2</option>
             </StyledField>
             <StyledError name="nameOut" component="div" />
           </label>
