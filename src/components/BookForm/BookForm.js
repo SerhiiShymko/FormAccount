@@ -41,7 +41,7 @@ export const BookForm = ({ onAdd }) => {
       initialValues={{
         selectData: new Date(),
         regNumber: '',
-        nameOut: 'Petrov1',
+        nameOut: 'all',
         nameIn: '',
         aktNumber: '',
         note: '',

@@ -6,43 +6,42 @@ import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
 
-// const localStorageKey = 'order-filters';
-// const initialFilters = {
-//   data: '',
-//   regNumber: '',
-//   nameOut: '',
-//   nameIn: '',
-//   aktNumber: '',
-//   note: '',
-// };
-
-// const getInitialFilters = () => {
-//   const savedFilters = localStorage.getItem(localStorageKey);
-//   if (savedFilters !== null) {
-//     return JSON.parse(savedFilters);
-//   }
-//   return initialFilters;
-// };
-
 export class App extends Component {
   state = {
     orderItems: initialQuizItems,
+    filters: {
+      selectData: null,
+      regNumber: '',
+      nameOut: 'all',
+      nameIn: '',
+      aktNumber: '',
+      note: '',
+    },
   };
-  // const [orderItems, setOrderItems] = useState([]);
-  // const [filters, setFilters] = useState(getInitialFilters);
-  // const [loading, setLoading] = useState(false);
 
-  // const deleteOrder = async orderId => {
-  //   console.log(orderId);
-  //   try {
-  //     const deletedOrder = await deleteOrder(orderId);
-  //     setOrderItems(prevState =>
-  //       prevState.orderItems.filter(order => order.id !== deletedOrder.id)
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  changeFilters = newFilter => {
+    this.setState(prevState => {
+      return {
+        filters: {
+          ...prevState.filters,
+          ...newFilter,
+        },
+      };
+    });
+  };
+
+  handleReset = () => {
+    this.setState({
+      filters: {
+        selectData: null,
+        regNumber: '',
+        nameOut: 'all',
+        nameIn: '',
+        aktNumber: '',
+        note: '',
+      },
+    });
+  };
 
   handleDelete = orderId => {
     this.setState(prevState => {
@@ -60,41 +59,54 @@ export class App extends Component {
     });
   };
 
-  //Фетч данних х бекенду
-  // useEffect(() => {
-  //   async function getOrder() {
-  //     try {
-  //       setLoading(true);
-  //       const orderItems = await fetchOrder();
-  //       setOrderItems(orderItems);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   getOrder();
-  // }, []);
-
-  //Запис фільтрів в localStorage
-  // useEffect(() => {
-  //   localStorage.setItem(localStorageKey, JSON.stringify(filters));
-  // }, [filters]);
-
-  // const resetFilters = () => {
-  //   setFilters(initialFilters);
-  // };
   render() {
+    const { filters, orderItems } = this.state;
+
+    const visibleOrderItems = orderItems.filter(order => {
+      const selectDataMatch =
+        !filters.selectData ||
+        new Date(order.selectData).toDateString() ===
+          filters.selectData.toDateString();
+
+      const regNumberMatch = order.regNumber
+        .toLowerCase()
+        .includes(filters.regNumber.toLowerCase());
+      const nameOutMatch =
+        filters.nameOut === 'all' ||
+        order.nameOut.toLowerCase().includes(filters.nameOut.toLowerCase());
+      const nameInMatch = order.nameIn
+        .toLowerCase()
+        .includes(filters.nameIn.toLowerCase());
+      const aktNumberMatch = order.aktNumber
+        .toString()
+        .includes(filters.aktNumber);
+      const noteMatch = order.note
+        .toLowerCase()
+        .includes(filters.note.toLowerCase());
+
+      return (
+        selectDataMatch &&
+        regNumberMatch &&
+        nameOutMatch &&
+        nameInMatch &&
+        aktNumberMatch &&
+        noteMatch
+      );
+    });
+
     return (
       <>
         <Header />
-        {/* <SearchBar /> */}
+        <SearchBar
+          allFilter={filters}
+          onChangeFilters={this.changeFilters}
+          onReset={this.handleReset}
+        />
         <BookForm onAdd={this.addOrder} />
         {/* {loading ? (
             <div>LOADING...</div>
           ) : ( */}
-        <BookList items={this.state.orderItems} onDelete={this.handleDelete} />
+        <BookList items={visibleOrderItems} onDelete={this.handleDelete} />
         {/* )} */}
       </>
     );
