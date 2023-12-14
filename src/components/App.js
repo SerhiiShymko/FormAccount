@@ -4,6 +4,7 @@ import initialQuizItems from '../data.json';
 // import { fetchOrder } from 'api';
 import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
+import { Header } from './Header/Header';
 
 // const localStorageKey = 'order-filters';
 // const initialFilters = {
@@ -87,19 +88,14 @@ export class App extends Component {
   render() {
     return (
       <>
-        <>
-          <h1>ЖУРНАЛ ОБЛІКУ НОСІЇВ ІНФОРМАЦІЇ</h1>
-          {/* <SearchBar /> */}
-          <BookForm onAdd={this.addOrder} />
-          {/* {loading ? (
+        <Header />
+        {/* <SearchBar /> */}
+        <BookForm onAdd={this.addOrder} />
+        {/* {loading ? (
             <div>LOADING...</div>
           ) : ( */}
-          <BookList
-            items={this.state.orderItems}
-            onDelete={this.handleDelete}
-          />
-          {/* )} */}
-        </>
+        <BookList items={this.state.orderItems} onDelete={this.handleDelete} />
+        {/* )} */}
       </>
     );
   }

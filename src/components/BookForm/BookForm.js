@@ -48,12 +48,9 @@ export const BookForm = ({ onAdd }) => {
       }}
       validationSchema={schema}
       onSubmit={(values, actions) => {
-        // console.log('Form values:', values);
-        // console.log('Selected Date in onSubmit:', values.selectData);
         const formattedDate = formatDate(values.selectData);
-        // console.log('Formatted date:', formattedDate);
         onAdd({ ...values, selectData: formattedDate, id: nanoid() });
-        // actions.resetForm();
+        actions.resetForm();
       }}
     >
       {({ values, setFieldValue }) => (
@@ -65,7 +62,6 @@ export const BookForm = ({ onAdd }) => {
               onChange={date => {
                 setFieldValue('selectData', date);
                 setSelectedData(date);
-                // console.log('Selected Date:', date);
               }}
               dateFormat="dd.MM.yyyy"
             />
