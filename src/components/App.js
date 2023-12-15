@@ -61,6 +61,7 @@ export class App extends Component {
 
   getVisibleOrderItems = () => {
     const { orderItems, filters } = this.state;
+
     return orderItems.filter(order => {
       const selectDataMatch =
         !filters.selectData ||

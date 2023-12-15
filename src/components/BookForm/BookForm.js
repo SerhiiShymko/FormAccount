@@ -41,7 +41,7 @@ export const BookForm = ({ onAdd }) => {
       initialValues={{
         selectData: new Date(),
         regNumber: '',
-        nameOut: '',
+        nameOut: 'Petrov1',
         nameIn: '',
         aktNumber: '',
         note: '',
@@ -51,7 +51,7 @@ export const BookForm = ({ onAdd }) => {
         console.log(values);
         const formattedDate = formatDate(values.selectData);
         onAdd({ ...values, selectData: formattedDate, id: nanoid() });
-        actions.resetForm();
+        // actions.resetForm();
       }}
     >
       {({ values, setFieldValue }) => (
@@ -72,7 +72,11 @@ export const BookForm = ({ onAdd }) => {
             <StyledError name="regNumber" component="div" />
           </label>
           <label>
-            <StyledField name="nameOut" as="select">
+            <StyledField
+              name="nameOut"
+              as="select"
+              onChange={e => setFieldValue('nameOut', e.target.value)}
+            >
               <option value="Petrov1">Petrov1</option>
               <option value="Petrov2">Petrov2</option>
             </StyledField>
