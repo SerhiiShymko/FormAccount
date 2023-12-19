@@ -19,6 +19,21 @@ export class App extends Component {
     },
   };
 
+  componentDidMount() {
+    const savedFilters = localStorage.getItem('order-filters');
+    if (savedFilters !== null) {
+      this.setState({
+        filters: JSON.parse(savedFilters),
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.filters !== this.state.filters) {
+      localStorage.setItem('order-filters', JSON.stringify(this.state.filters));
+    }
+  }
+
   changeFilters = newFilter => {
     this.setState(prevState => {
       return {
@@ -96,6 +111,7 @@ export class App extends Component {
   };
 
   render() {
+    console.log('render');
     const { filters } = this.state;
     const visibleOrderItems = this.getVisibleOrderItems();
 

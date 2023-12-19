@@ -51,7 +51,7 @@ export const BookForm = ({ onAdd }) => {
         console.log(values);
         const formattedDate = formatDate(values.selectData);
         onAdd({ ...values, selectData: formattedDate, id: nanoid() });
-        // actions.resetForm();
+        actions.resetForm();
       }}
     >
       {({ values, setFieldValue }) => (
