@@ -6,21 +6,25 @@ import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
 
+const localStorageKey = 'quiz-filters';
+
+const intialFilters = {
+  selectData: null,
+  regNumber: '',
+  nameOut: 'all',
+  nameIn: '',
+  aktNumber: '',
+  note: '',
+};
+
 export class App extends Component {
   state = {
     orderItems: initialQuizItems,
-    filters: {
-      selectData: null,
-      regNumber: '',
-      nameOut: 'all',
-      nameIn: '',
-      aktNumber: '',
-      note: '',
-    },
+    filters: intialFilters,
   };
 
   componentDidMount() {
-    const savedFilters = localStorage.getItem('order-filters');
+    const savedFilters = localStorage.getItem(localStorageKey);
     if (savedFilters !== null) {
       this.setState({
         filters: JSON.parse(savedFilters),
@@ -29,8 +33,11 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.filters !== this.state.filters) {
-      localStorage.setItem('order-filters', JSON.stringify(this.state.filters));
+    const { filters: prevFilters } = prevState;
+    const { filters: nextFilters } = this.state;
+
+    if (prevFilters !== nextFilters) {
+      localStorage.setItem(localStorageKey, JSON.stringify(nextFilters));
     }
   }
 
@@ -47,14 +54,7 @@ export class App extends Component {
 
   handleReset = () => {
     this.setState({
-      filters: {
-        selectData: null,
-        regNumber: '',
-        nameOut: 'all',
-        nameIn: '',
-        aktNumber: '',
-        note: '',
-      },
+      filters: intialFilters,
     });
   };
 
@@ -80,8 +80,9 @@ export class App extends Component {
     return orderItems.filter(order => {
       const selectDataMatch =
         !filters.selectData ||
-        new Date(order.selectData).toDateString() ===
-          filters.selectData.toDateString();
+        (filters.selectData instanceof Date &&
+          new Date(order.selectData).toDateString() ===
+            filters.selectData.toDateString());
 
       const regNumberMatch = order.regNumber
         .toLowerCase()
