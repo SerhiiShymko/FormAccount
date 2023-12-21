@@ -6,9 +6,9 @@ import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
 
-const localStorageKey = 'quiz-filters';
+const localStorageKey = 'order-filters';
 
-const intialFilters = {
+const initialFilters = {
   selectData: null,
   regNumber: '',
   nameOut: 'all',
@@ -20,7 +20,7 @@ const intialFilters = {
 export class App extends Component {
   state = {
     orderItems: initialQuizItems,
-    filters: intialFilters,
+    filters: initialFilters,
   };
 
   componentDidMount() {
@@ -54,7 +54,7 @@ export class App extends Component {
 
   handleReset = () => {
     this.setState({
-      filters: intialFilters,
+      filters: initialFilters,
     });
   };
 
@@ -83,7 +83,6 @@ export class App extends Component {
         (filters.selectData instanceof Date &&
           new Date(order.selectData).toDateString() ===
             filters.selectData.toDateString());
-
       const regNumberMatch = order.regNumber
         .toLowerCase()
         .includes(filters.regNumber.toLowerCase());

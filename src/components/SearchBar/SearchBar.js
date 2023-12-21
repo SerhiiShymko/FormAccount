@@ -21,13 +21,19 @@ export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
       <Input
         type="text"
         placeholder="Серійний номер"
-        onChange={e => onChangeFilters({ regNumber: e.target.value })}
+        onChange={e =>
+          onChangeFilters({ ...allFilter, regNumber: e.target.value })
+        }
+        value={allFilter.regNumber}
       />
       <Input
         type="text"
         placeholder="ПІБ передав"
         as="select"
-        onChange={e => onChangeFilters({ nameOut: e.target.value })}
+        onChange={e =>
+          onChangeFilters({ ...allFilter, nameOut: e.target.value })
+        }
+        value={allFilter.nameOut}
       >
         <option value="all">All</option>
         <option value="Petrov1">Petrov1</option>
@@ -37,17 +43,24 @@ export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
       <Input
         type="text"
         placeholder="ПІБ отримав"
-        onChange={e => onChangeFilters({ nameIn: e.target.value })}
+        onChange={e =>
+          onChangeFilters({ ...allFilter, nameIn: e.target.value })
+        }
+        value={allFilter.nameIn}
       />
       <Input
         type="text"
         placeholder="Акт передачі"
-        onChange={e => onChangeFilters({ aktNumber: e.target.value })}
+        onChange={e =>
+          onChangeFilters({ ...allFilter, aktNumber: e.target.value })
+        }
+        value={allFilter.aktNumber}
       />
       <Input
         type="text"
         placeholder="Примітка"
-        onChange={e => onChangeFilters({ note: e.target.value })}
+        onChange={e => onChangeFilters({ ...allFilter, note: e.target.value })}
+        value={allFilter.note}
       />
       <button onClick={onReset}>Reset filters</button>
     </List>
