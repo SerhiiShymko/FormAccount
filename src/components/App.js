@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { BookList } from './BookList/BookList';
-import initialQuizItems from '../data.json';
-// import { fetchOrder } from 'api';
+// import initialQuizItems from '../data.json';
+import { fetchOrders } from 'api';
 import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
@@ -19,17 +19,20 @@ const initialFilters = {
 
 export class App extends Component {
   state = {
-    orderItems: initialQuizItems,
+    orderItems: [],
     filters: initialFilters,
+    loading: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const savedFilters = localStorage.getItem(localStorageKey);
     if (savedFilters !== null) {
       this.setState({
         filters: JSON.parse(savedFilters),
       });
     }
+    const orderItems = await fetchOrders();
+    this.setState({ orderItems });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -111,7 +114,7 @@ export class App extends Component {
   };
 
   render() {
-    console.log('render');
+    // console.log('render');
     const { filters } = this.state;
     const visibleOrderItems = this.getVisibleOrderItems();
 
