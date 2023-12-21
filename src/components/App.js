@@ -5,6 +5,7 @@ import { fetchOrders } from 'api';
 import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
+import { Spinner } from './Spinner';
 
 const localStorageKey = 'order-filters';
 
@@ -31,8 +32,10 @@ export class App extends Component {
         filters: JSON.parse(savedFilters),
       });
     }
+
+    this.setState({ loading: true });
     const orderItems = await fetchOrders();
-    this.setState({ orderItems });
+    this.setState({ orderItems, loading: false });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -115,7 +118,7 @@ export class App extends Component {
 
   render() {
     // console.log('render');
-    const { filters } = this.state;
+    const { filters, loading } = this.state;
     const visibleOrderItems = this.getVisibleOrderItems();
 
     return (
@@ -127,11 +130,11 @@ export class App extends Component {
           onReset={this.handleReset}
         />
         <BookForm onAdd={this.addOrder} />
-        {/* {loading ? (
-            <div>LOADING...</div>
-          ) : ( */}
-        <BookList items={visibleOrderItems} onDelete={this.handleDelete} />
-        {/* )} */}
+        {loading ? (
+          <Spinner />
+        ) : (
+          <BookList items={visibleOrderItems} onDelete={this.handleDelete} />
+        )}
       </>
     );
   }
