@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { StyledError, StyledField, StyledForm } from './BookForm.styled';
@@ -50,8 +50,8 @@ export const BookForm = ({ onAdd }) => {
       onSubmit={(values, actions) => {
         console.log(values);
         const formattedDate = formatDate(values.selectData);
-        onAdd({ ...values, selectData: formattedDate, id: nanoid() });
-        actions.resetForm();
+        onAdd({ ...values, selectData: formattedDate });
+        // actions.resetForm();
       }}
     >
       {({ values, setFieldValue }) => (

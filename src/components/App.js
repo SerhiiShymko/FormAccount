@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { BookList } from './BookList/BookList';
 // import initialQuizItems from '../data.json';
-import { fetchOrders } from 'api';
+import { createOrder, deleteOrder, fetchOrders } from 'api';
 import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
@@ -33,9 +33,13 @@ export class App extends Component {
       });
     }
 
-    this.setState({ loading: true });
-    const orderItems = await fetchOrders();
-    this.setState({ orderItems, loading: false });
+    try {
+      this.setState({ loading: true });
+      const orderItems = await fetchOrders();
+      this.setState({ orderItems, loading: false });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -64,20 +68,30 @@ export class App extends Component {
     });
   };
 
-  handleDelete = orderId => {
-    this.setState(prevState => {
-      return {
-        orderItems: prevState.orderItems.filter(order => order.id !== orderId),
-      };
-    });
+  handleDelete = async orderId => {
+    try {
+      const deletedOrder = await deleteOrder(orderId);
+
+      this.setState(prevState => ({
+        orderItems: prevState.orderItems.filter(
+          order => order.id !== deletedOrder.id
+        ),
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  addOrder = newOrder => {
-    this.setState(prevState => {
-      return {
-        orderItems: [...prevState.orderItems, newOrder],
-      };
-    });
+  addOrder = async newOrder => {
+    try {
+      const createdOrder = await createOrder(newOrder);
+
+      this.setState(prevState => ({
+        orderItems: [...prevState.orderItems, createdOrder],
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   getVisibleOrderItems = () => {
@@ -130,6 +144,7 @@ export class App extends Component {
           onReset={this.handleReset}
         />
         <BookForm onAdd={this.addOrder} />
+
         {loading ? (
           <Spinner />
         ) : (
