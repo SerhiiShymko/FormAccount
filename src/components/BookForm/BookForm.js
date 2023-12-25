@@ -3,7 +3,12 @@ import * as Yup from 'yup';
 // import { nanoid } from 'nanoid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { StyledError, StyledField, StyledForm } from './BookForm.styled';
+import {
+  AddButton,
+  StyledError,
+  StyledField,
+  StyledForm,
+} from './BookForm.styled';
 import { useState } from 'react';
 // import { IconButton } from 'components/IconButton/IconButton';
 
@@ -98,7 +103,7 @@ export const BookForm = ({ onAdd }) => {
             <StyledField name="note" placeholder="Примітка" />
             <StyledError name="note" component="div" />
           </label>
-          <button type="submit">Add</button>
+          <AddButton type="submit">Add</AddButton>
         </StyledForm>
       )}
     </Formik>

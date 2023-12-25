@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, List } from './SearchBar.styled';
+import { Input, List, ResetButton } from './SearchBar.styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import { fetchOrder } from 'api';
@@ -62,7 +62,7 @@ export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
         onChange={e => onChangeFilters({ ...allFilter, note: e.target.value })}
         value={allFilter.note}
       />
-      <button onClick={onReset}>Reset filters</button>
+      <ResetButton onClick={onReset}>Reset filters</ResetButton>
     </List>
   );
 };

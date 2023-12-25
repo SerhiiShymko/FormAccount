@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const List = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 10px;
   margin-bottom: 10px;
 `;
 
@@ -19,21 +19,18 @@ export const Select = styled.select`
   width: 150px;
 `;
 
-export const Button = styled.button`
-  padding: 5px 10px;
-  background-color: #3498db;
+export const ResetButton = styled.button`
+  width: 130px;
+  height: 30px;
+  background-color: #2b77ec;
   color: #fff;
   border: none;
+  border-radius: 5px;
+  padding: 5px;
   cursor: pointer;
-`;
 
-export const ResetButton = styled(Button)`
-  background-color: #e74c3c;
-  margin-left: 10px;
+  &:hover,
+  &:focus {
+    background-color: #0763f0;
+  }
 `;
-
-// export const StyledDatePicker = styled(DatePicker)`
-//   padding: 5px;
-//   margin-bottom: 5px;
-//   width: 150px;
-// `;

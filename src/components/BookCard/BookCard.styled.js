@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const List = styled.ul`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-  padding-left: 1.5px;
-`;
+// export const List = styled.ul`
+//   display: flex;
+//   flex-direction: row;
+//   gap: 2px;
+//   padding-left: 1.5px;
+// `;
 
 // export const ListItem = styled.li`
 //   padding: 2px;
@@ -27,9 +27,18 @@ export const ListItem = styled.span`
 `;
 
 export const DeleteButton = styled.button`
+  width: 130px;
+  height: 30px;
   background-color: #e74c3c;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  border-radius: 5px;
+  padding: 5px;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+    background-color: #642720;
+  }
 `;

@@ -1,9 +1,4 @@
-import {
-  BookCardContainer,
-  DeleteButton,
-  List,
-  ListItem,
-} from './BookCard.styled';
+import { BookCardContainer, DeleteButton, ListItem } from './BookCard.styled';
 
 export const BookCard = ({
   item: { id, selectData, regNumber, nameOut, nameIn, aktNumber, note },

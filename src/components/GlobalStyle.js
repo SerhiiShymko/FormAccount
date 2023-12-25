@@ -33,7 +33,20 @@ th,
 td,
 input {
  border: solid 1px;
- width: 130px;
+ max-width: 130px;
 text-align:center
+}
+
+button, a {
+  cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border: none;
+     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+  }
 }
 `;
