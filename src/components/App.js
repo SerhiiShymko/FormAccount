@@ -1,3 +1,4 @@
+import { Component } from 'react';
 import { BookList } from './BookList/BookList';
 // import initialQuizItems from '../data.json';
 import { createOrder, deleteOrder, fetchOrders } from 'api';
@@ -5,7 +6,6 @@ import { BookForm } from './BookForm/BookForm';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
 import { Spinner } from './Spinner';
-import { useEffect, useState } from 'react';
 
 const localStorageKey = 'order-filters';
 
@@ -18,71 +18,84 @@ const initialFilters = {
   note: '',
 };
 
-export const App = () => {
-  const [orderItems, setOrderItems] = useState([]);
-  const [filters, setFilters] = useState(() => {
+export class App extends Component {
+  state = {
+    orderItems: [],
+    filters: initialFilters,
+    loading: false,
+  };
+
+  async componentDidMount() {
     const savedFilters = localStorage.getItem(localStorageKey);
     if (savedFilters !== null) {
-      return JSON.parse(savedFilters);
+      this.setState({
+        filters: JSON.parse(savedFilters),
+      });
     }
-    return initialFilters;
-  });
-  const [loading, setLoading] = useState(false);
-
-  // Фетч данних з бекенду
-  useEffect(() => {
-    async function getOrders() {
-      try {
-        setLoading(true);
-        const orderItems = await fetchOrders();
-        setOrderItems(orderItems);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getOrders();
-  }, []);
-
-  // Запис фільтрів в localStorage
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(filters));
-  }, [filters]);
-
-  const handleReset = () => {
-    setFilters(initialFilters);
-  };
-
-  const changeFilters = newFilter => {
-    setFilters(prevState => ({
-      ...prevState.filters,
-      ...newFilter,
-    }));
-  };
-
-  const addOrder = async newOrder => {
     try {
-      const createdOrder = await createOrder(newOrder);
-      setOrderItems(prevState => [...prevState.orderItems, createdOrder]);
+      this.setState({ loading: true });
+      const orderItems = await fetchOrders();
+      this.setState({ orderItems, loading: false });
     } catch (error) {
       console.log(error);
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { filters: prevFilters } = prevState;
+    const { filters: nextFilters } = this.state;
+
+    if (prevFilters !== nextFilters) {
+      localStorage.setItem(localStorageKey, JSON.stringify(nextFilters));
+    }
+  }
+
+  changeFilters = newFilter => {
+    this.setState(prevState => {
+      return {
+        filters: {
+          ...prevState.filters,
+          ...newFilter,
+        },
+      };
+    });
   };
 
-  const handleDelete = async orderId => {
+  handleReset = () => {
+    this.setState({
+      filters: initialFilters,
+    });
+  };
+
+  handleDelete = async orderId => {
     try {
       const deletedOrder = await deleteOrder(orderId);
-      setOrderItems(prevState =>
-        prevState.orderItems.filter(order => order.id !== deletedOrder.id)
-      );
+
+      this.setState(prevState => ({
+        orderItems: prevState.orderItems.filter(
+          order => order.id !== deletedOrder.id
+        ),
+      }));
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getVisibleOrderItems = () => {
+  addOrder = async newOrder => {
+    try {
+      const createdOrder = await createOrder(newOrder);
+
+      this.setState(prevState => ({
+        orderItems: [...prevState.orderItems, createdOrder],
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getVisibleOrderItems = () => {
+    const { orderItems, filters } = this.state;
+
     return orderItems.filter(order => {
       const selectDataMatch =
         !filters.selectData ||
@@ -116,23 +129,25 @@ export const App = () => {
     });
   };
 
-  const visibleOrderItems = getVisibleOrderItems();
-
-  return (
-    <>
-      <Header />
-      <SearchBar
-        allFilter={filters}
-        onChangeFilters={changeFilters}
-        onReset={handleReset}
-      />
-      <BookForm onAdd={addOrder} />
-
-      {loading ? (
-        <Spinner />
-      ) : (
-        <BookList items={visibleOrderItems} onDelete={handleDelete} />
-      )}
-    </>
-  );
-};
+  render() {
+    console.log('render');
+    const { filters, loading } = this.state;
+    const visibleOrderItems = this.getVisibleOrderItems();
+    return (
+      <>
+        <Header />
+        <SearchBar
+          allFilter={filters}
+          onChangeFilters={this.changeFilters}
+          onReset={this.handleReset}
+        />
+        <BookForm onAdd={this.addOrder} />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <BookList items={visibleOrderItems} onDelete={this.handleDelete} />
+        )}
+      </>
+    );
+  }
+}
