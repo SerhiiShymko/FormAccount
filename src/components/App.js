@@ -28,8 +28,7 @@ const getInitialFilters = () => {
 
 export const App = () => {
   const [orderItems, setOrderItems] = useState([]);
-  //   const [filters, setFilters] = useState(initialFilters);
-  const [filters, setFilters] = useState(getInitialFilters);
+  const [filters, setFilters] = useState(getInitialFilters());
   const [loading, setLoading] = useState(false);
 
   //   // Фетч данних з бекенду
@@ -59,9 +58,8 @@ export const App = () => {
   };
 
   const changeFilters = newFilter => {
-    // console.log(changeFilters);
     setFilters(prevState => ({
-      ...prevState.filters,
+      ...prevState,
       ...newFilter,
     }));
   };
@@ -79,10 +77,7 @@ export const App = () => {
     try {
       const deletedOrder = await deleteOrder(orderId);
       setOrderItems(prevState => {
-        // if (prevState.orderItems) {
         return prevState.filter(order => order.id !== deletedOrder.id);
-        // }
-        // return prevState.orderItems;
       });
     } catch (error) {
       console.log(error);
