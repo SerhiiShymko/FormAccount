@@ -91,9 +91,12 @@ export const App = () => {
         (filters.selectData instanceof Date &&
           new Date(order.selectData).toDateString() ===
             filters.selectData.toDateString());
-      const regNumberMatch = order.regNumber
-        .toLowerCase()
-        .includes(filters.regNumber.toLowerCase());
+      const regNumberMatch =
+        !filters.regNumber ||
+        (order.regNumber &&
+          order.regNumber
+            .toLowerCase()
+            .includes(filters.regNumber.toLowerCase()));
       const nameOutMatch =
         filters.nameOut === 'all' ||
         order.nameOut.toLowerCase().includes(filters.nameOut.toLowerCase());
