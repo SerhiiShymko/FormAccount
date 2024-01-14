@@ -53,20 +53,18 @@ export const BookForm = ({ onAdd }) => {
       }}
       validationSchema={schema}
       onSubmit={(values, actions) => {
-        console.log(values);
         const formattedDate = formatDate(values.selectData);
         onAdd({ ...values, selectData: formattedDate });
         actions.resetForm();
       }}
     >
-      {({ values, setFieldValue }) => (
+      {formikProps => (
         <StyledForm>
           <label>
             <DatePicker
-              // placeholderText="Дата"
               selected={selectedData}
               onChange={date => {
-                setFieldValue('selectData', date);
+                formikProps.setFieldValue('selectData', date);
                 setSelectedData(date);
               }}
               dateFormat="dd.MM.yyyy"
@@ -80,7 +78,9 @@ export const BookForm = ({ onAdd }) => {
             <StyledField
               name="nameOut"
               as="select"
-              onChange={e => setFieldValue('nameOut', e.target.value)}
+              onChange={e =>
+                formikProps.setFieldValue('nameOut', e.target.value)
+              }
             >
               <option value="Petrov1">Petrov1</option>
               <option value="Petrov2">Petrov2</option>
