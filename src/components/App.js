@@ -6,6 +6,7 @@ import { SearchBar } from './SearchBar/SearchBar';
 import { Header } from './Header/Header';
 import { Spinner } from './Spinner';
 import { useEffect, useState } from 'react';
+import { formatDate } from './utils';
 
 const localStorageKey = 'order-filters';
 
@@ -25,6 +26,18 @@ const getInitialFilters = () => {
   }
   return initialFilters;
 };
+// const getInitialFilters = () => {
+//   const savedFilters = localStorage.getItem(localStorageKey);
+//   if (savedFilters !== null) {
+//     const parsedFilters = JSON.parse(savedFilters);
+//     parsedFilters.selectData =
+//       parsedFilters.selectData instanceof Date
+//         ? formatDate(parsedFilters.selectData)
+//         : parsedFilters.selectData;
+//     return parsedFilters;
+//   }
+//   return initialFilters;
+// };
 
 export const App = () => {
   const [orderItems, setOrderItems] = useState([]);
@@ -86,11 +99,17 @@ export const App = () => {
 
   const getVisibleOrderItems = () => {
     return orderItems.filter(order => {
+      console.log('order.selectData:', order.selectData);
+      console.log('filters.selectData:', filters.selectData);
+
       const selectDataMatch =
-        !filters.selectData ||
-        (filters.selectData instanceof Date &&
-          new Date(order.selectData).toDateString() ===
-            filters.selectData.toDateString());
+        filters.selectData === null ||
+        (order.selectData &&
+          formatDate(new Date(order.selectData)) ===
+            formatDate(filters.selectData));
+
+      console.log('selectDataMatch:', selectDataMatch);
+
       const regNumberMatch =
         !filters.regNumber ||
         (order.regNumber &&

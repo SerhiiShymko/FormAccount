@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Input, List, ResetButton } from './SearchBar.styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { formatDate } from 'components/utils';
 // import { fetchOrder } from 'api';
 
 export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
@@ -13,7 +14,8 @@ export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
         selected={selectedData}
         onChange={date => {
           setSelectedData(date);
-          onChangeFilters({ selectData: date });
+          const formattedDate = date instanceof Date ? formatDate(date) : date;
+          onChangeFilters({ selectData: formattedDate });
         }}
         dateFormat="dd.MM.yyyy"
         placeholder="Дата отримання"

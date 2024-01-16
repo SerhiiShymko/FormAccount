@@ -10,6 +10,7 @@ import {
   StyledForm,
 } from './BookForm.styled';
 import { useState } from 'react';
+import { formatDate } from 'components/utils';
 // import { IconButton } from 'components/IconButton/IconButton';
 
 const schema = Yup.object().shape({
@@ -31,15 +32,6 @@ const schema = Yup.object().shape({
 
 export const BookForm = ({ onAdd }) => {
   const [selectedData, setSelectedData] = useState(new Date());
-
-  const formatDate = date => {
-    const formattedDate = new Date(date);
-    const day = formattedDate.getDate().toString().padStart(2, '0');
-    const month = (formattedDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = formattedDate.getFullYear();
-
-    return `${day}.${month}.${year}`;
-  };
 
   return (
     <Formik
