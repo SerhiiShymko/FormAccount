@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.div`
-  background-color: #3498db;
+  /* background-color: #3498db; */
+  background-color: red;
   color: #fff;
   text-align: center;
   padding: 20px;
