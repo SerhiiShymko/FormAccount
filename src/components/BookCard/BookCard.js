@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BookCardContainer, DeleteButton, ListItem } from './BookCard.styled';
 
 export const BookCard = ({
@@ -7,7 +8,9 @@ export const BookCard = ({
   return (
     <BookCardContainer>
       <ListItem>{selectData}</ListItem>
-      <ListItem>{regNumber}</ListItem>
+      <ListItem>
+        <Link to={`/orders/${id}`}>{regNumber}</Link>
+      </ListItem>
       <ListItem>{nameOut}</ListItem>
       <ListItem>{nameIn}</ListItem>
       <ListItem>{aktNumber}</ListItem>

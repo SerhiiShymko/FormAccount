@@ -7,6 +7,11 @@ export const fetchOrders = async () => {
   return response.data;
 };
 
+export const fetchOrdersById = async orderId => {
+  const response = await axios.get(`/order/${orderId}`);
+  return response.data;
+};
+
 export const deleteOrder = async orderId => {
   const response = await axios.delete(`/order/${orderId}`);
   return response.data;
