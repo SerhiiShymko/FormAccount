@@ -5,6 +5,7 @@ import { BookList } from 'components/BookList/BookList';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { deleteOrder, fetchOrders } from 'api';
 import { formatDate } from 'components/utils';
+import { Header } from 'components/Header/Header';
 
 const localStorageKey = 'order-filters';
 
@@ -115,6 +116,7 @@ const OrdersPage = () => {
 
   return (
     <div>
+      <Header />
       <SearchBar
         allFilter={filters}
         onChangeFilters={changeFilters}
