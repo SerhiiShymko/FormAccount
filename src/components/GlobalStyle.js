@@ -29,8 +29,13 @@ export const GlobalStyle = createGlobalStyle`
     object-fit: cover;
   }
 
-th,
-td,
+hr {
+  border: 0;
+  height: 2px;
+   background: blue;
+  margin: 20px 0;
+}
+
 input {
  border: solid 1px;
  max-width: 130px;
