@@ -7,28 +7,28 @@ import { deleteOrder, fetchOrders } from 'api';
 import { formatDate } from 'components/utils';
 import { Header } from 'components/Header/Header';
 
-const localStorageKey = 'order-filters';
+// const localStorageKey = 'order-filters';
 
-const initialFilters = {
-  selectData: null,
-  regNumber: '',
-  nameOut: 'all',
-  nameIn: '',
-  aktNumber: '',
-  note: '',
-};
+// const initialFilters = {
+//   selectData: null,
+//   regNumber: '',
+//   nameOut: 'all',
+//   nameIn: '',
+//   aktNumber: '',
+//   note: '',
+// };
 
-const getInitialFilters = () => {
-  const savedFilters = localStorage.getItem(localStorageKey);
-  if (savedFilters !== null) {
-    return JSON.parse(savedFilters);
-  }
-  return initialFilters;
-};
+// const getInitialFilters = () => {
+//   const savedFilters = localStorage.getItem(localStorageKey);
+//   if (savedFilters !== null) {
+//     return JSON.parse(savedFilters);
+//   }
+//   return initialFilters;
+// };
 
 const OrdersPage = () => {
   const [orderItems, setOrderItems] = useState([]);
-  const [filters, setFilters] = useState(getInitialFilters());
+  // const [filters, setFilters] = useState(getInitialFilters());
   const [loading, setLoading] = useState(false);
 
   //    Фетч данних з бекенду
@@ -49,13 +49,13 @@ const OrdersPage = () => {
   }, []);
 
   //   Запис фільтрів в localStorage
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(filters));
-  }, [filters]);
+  // useEffect(() => {
+  //   localStorage.setItem(localStorageKey, JSON.stringify(filters));
+  // }, [filters]);
 
-  const handleReset = () => {
-    setFilters(initialFilters);
-  };
+  // const handleReset = () => {
+  //   setFilters(initialFilters);
+  // };
 
   const changeFilters = newFilter => {
     setFilters(prevState => ({
@@ -117,11 +117,11 @@ const OrdersPage = () => {
   return (
     <div>
       <Header />
-      <SearchBar
+      {/* <SearchBar
         allFilter={filters}
         onChangeFilters={changeFilters}
         onReset={handleReset}
-      />
+      /> */}
 
       <div>
         <Link to="/create">Create order</Link>
