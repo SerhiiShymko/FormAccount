@@ -6,15 +6,19 @@ import { SearchBar } from 'components/SearchBar/SearchBar';
 import { deleteOrder, fetchOrders } from 'api';
 import { formatDate } from 'components/utils';
 import { Header } from 'components/Header/Header';
+import { useQueryParams } from 'hooks/useQueryParams';
 
 const OrdersPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectDataFilter = searchParams.get('selectData') ?? null;
-  const regNumberFilter = searchParams.get('regNumber') ?? '';
-  const nameOutFilter = searchParams.get('nameOut') ?? 'all';
-  const nameInFilter = searchParams.get('nameIn') ?? '';
-  const aktNumberFilter = searchParams.get('aktNumber') ?? '';
-  const noteFilter = searchParams.get('note') ?? '';
+  const {
+    selectData,
+    regNumber,
+    nameOut,
+    nameIn,
+    aktNumber,
+    note,
+    reset,
+    changeFilters,
+  } = useQueryParams();
 
   const [orderItems, setOrderItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,10 +39,6 @@ const OrdersPage = () => {
     }
     getOrders();
   }, []);
-
-  const changeFilters = newFilter => {
-    setSearchParams(newFilter);
-  };
 
   const handleDelete = async orderId => {
     try {
@@ -96,7 +96,7 @@ const OrdersPage = () => {
       <SearchBar
         allFilter={searchParams}
         onChangeFilters={changeFilters}
-        // onReset={handleReset}
+        onReset={reset}
       />
 
       <div>
