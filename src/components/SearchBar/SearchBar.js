@@ -3,7 +3,6 @@ import { Input, List, ResetButton } from './SearchBar.styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { formatDate } from 'components/utils';
-// import { fetchOrder } from 'api';
 
 export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
   const [selectedData, setSelectedData] = useState(new Date());

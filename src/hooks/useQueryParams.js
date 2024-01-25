@@ -15,7 +15,7 @@ export const useQueryParams = () => {
 
   const reset = () => {
     setSearchParams({
-      selectData: null,
+      //   selectData: null,
       regNumber: '',
       nameOut: 'all',
       nameIn: '',
@@ -31,8 +31,8 @@ export const useQueryParams = () => {
     nameIn,
     aktNumber,
     note,
-    reset,
     changeFilters,
     searchParams,
+    reset,
   };
 };

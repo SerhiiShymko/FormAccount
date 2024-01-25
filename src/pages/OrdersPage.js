@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Spinner } from 'components/Spinner';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BookList } from 'components/BookList/BookList';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { deleteOrder, fetchOrders } from 'api';
@@ -16,8 +16,9 @@ const OrdersPage = () => {
     nameIn,
     aktNumber,
     note,
-    reset,
     changeFilters,
+    searchParams,
+    reset,
   } = useQueryParams();
 
   const [orderItems, setOrderItems] = useState([]);
@@ -51,44 +52,40 @@ const OrdersPage = () => {
     }
   };
 
-  // const getVisibleOrderItems = () => {
-  //   return orderItems.filter(order => {
-  //     const selectDataMatch =
-  //       filters.selectData === null ||
-  //       (order.selectData &&
-  //         formatDate(new Date(order.selectData)) ===
-  //           formatDate(filters.selectData));
-  //     const regNumberMatch =
-  //       !filters.regNumber ||
-  //       (order.regNumber &&
-  //         order.regNumber
-  //           .toLowerCase()
-  //           .includes(filters.regNumber.toLowerCase()));
-  //     const nameOutMatch =
-  //       filters.nameOut === 'all' ||
-  //       order.nameOut.toLowerCase().includes(filters.nameOut.toLowerCase());
-  //     const nameInMatch = order.nameIn
-  //       .toLowerCase()
-  //       .includes(filters.nameIn.toLowerCase());
-  //     const aktNumberMatch = order.aktNumber
-  //       .toString()
-  //       .includes(filters.aktNumber);
-  //     const noteMatch = order.note
-  //       .toLowerCase()
-  //       .includes(filters.note.toLowerCase());
+  const getVisibleOrderItems = () => {
+    return orderItems.filter(order => {
+      const selectDataMatch =
+        selectData === null ||
+        (order.selectData &&
+          formatDate(order.selectData) === formatDate(selectData));
 
-  //     return (
-  //       selectDataMatch &&
-  //       regNumberMatch &&
-  //       nameOutMatch &&
-  //       nameInMatch &&
-  //       aktNumberMatch &&
-  //       noteMatch
-  //     );
-  //   });
-  // };
+      // console.log(selectData);
 
-  // const visibleOrderItems = getVisibleOrderItems();
+      const regNumberMatch =
+        !regNumber ||
+        (order.regNumber &&
+          order.regNumber.toLowerCase().includes(regNumber.toLowerCase()));
+      const nameOutMatch =
+        nameOut === 'all' ||
+        order.nameOut.toLowerCase().includes(nameOut.toLowerCase());
+      const nameInMatch = order.nameIn
+        .toLowerCase()
+        .includes(nameIn.toLowerCase());
+      const aktNumberMatch = order.aktNumber.toString().includes(aktNumber);
+      const noteMatch = order.note.toLowerCase().includes(note.toLowerCase());
+
+      return (
+        selectDataMatch &&
+        regNumberMatch &&
+        nameOutMatch &&
+        nameInMatch &&
+        aktNumberMatch &&
+        noteMatch
+      );
+    });
+  };
+
+  const visibleOrderItems = getVisibleOrderItems();
 
   return (
     <div>
@@ -106,7 +103,7 @@ const OrdersPage = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <BookList items={orderItems} onDelete={handleDelete} />
+        <BookList items={visibleOrderItems} onDelete={handleDelete} />
       )}
     </div>
   );
