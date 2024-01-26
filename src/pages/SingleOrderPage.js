@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchOrdersById } from 'api';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const SingleOrderPage = () => {
+  const location = useLocation();
+
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
 
@@ -18,7 +21,19 @@ const SingleOrderPage = () => {
     fetchOrderById();
   }, [orderId]);
 
-  return <div>{order && <div>{order.regNumber}</div>}</div>;
+  const backLinkHref = location?.state?.from ?? '/orders';
+
+  return (
+    <div>
+      <div>
+        <Link to={backLinkHref}>
+          <AiOutlineArrowLeft />
+          Back
+        </Link>
+      </div>
+      {order && <div>{order.regNumber}</div>}
+    </div>
+  );
 };
 
 export default SingleOrderPage;
