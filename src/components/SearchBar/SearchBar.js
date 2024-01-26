@@ -3,9 +3,11 @@ import { Input, List, ResetButton } from './SearchBar.styled';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { formatDate } from 'components/utils';
+import { useQueryParams } from 'hooks/useQueryParams';
 
-export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
+export const SearchBar = ({ allFilter, onChangeFilters }) => {
   const [selectedData, setSelectedData] = useState(new Date());
+  const { reset } = useQueryParams();
 
   return (
     <List>
@@ -63,7 +65,7 @@ export const SearchBar = ({ allFilter, onChangeFilters, onReset }) => {
         onChange={e => onChangeFilters({ ...allFilter, note: e.target.value })}
         value={allFilter.note}
       />
-      <ResetButton onClick={onReset}>Reset filters</ResetButton>
+      <ResetButton onClick={reset}>Reset filters</ResetButton>
     </List>
   );
 };
