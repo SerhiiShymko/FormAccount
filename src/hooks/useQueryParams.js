@@ -14,7 +14,7 @@ export const useQueryParams = () => {
   };
 
   const reset = () => {
-    // console.log(reset);
+    console.log('Reset button clicked');
     setSearchParams({
       // selectData: null,
       regNumber: '',

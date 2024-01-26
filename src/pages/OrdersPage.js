@@ -18,7 +18,7 @@ const OrdersPage = () => {
     note,
     changeFilters,
     searchParams,
-    reset,
+    // reset,
   } = useQueryParams();
 
   const [orderItems, setOrderItems] = useState([]);
@@ -91,9 +91,9 @@ const OrdersPage = () => {
     <div>
       <Header />
       <SearchBar
-        allFilter={searchParams}
+        value={searchParams}
         onChangeFilters={changeFilters}
-        onReset={reset}
+        // onReset={reset}
       />
 
       <div>
