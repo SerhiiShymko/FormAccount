@@ -3,6 +3,7 @@ import 'modern-normalize';
 
 export const GlobalStyle = createGlobalStyle`
   body {
+    background-color: #b8f1f1;
     max-width: 1440px;
     margin: 0 auto;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
